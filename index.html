@@ -1,265 +1,229 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Year Surprise For My Love 💕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our 2026 Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Arial', sans-serif; 
-            background: linear-gradient(135deg, #a2cffe 0%, #f8c8dc 50%, #fefefe 100%);
-            height: 100vh; overflow: hidden; position: relative;
+        :root {
+            --pastel-white: #fdfcf0;
+            --pastel-pink: #ffb7b2;
+            --sky-blue: #a2d2ff;
+            --dark-blue: #4a90e2;
+            --text-main: #5e548e;
         }
-        .page { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; flex-direction: column; justify-content: center; 
-            align-items: center; text-align: center; padding: 20px;
-            animation: fadeIn 0.6s ease-in-out; 
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--pastel-white), var(--sky-blue));
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            text-align: center; overflow-x: hidden;
+            transition: background 0.8s ease;
         }
-        .page.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        h1 { font-size: clamp(2em, 5vw, 3.5em); color: #4a5568; margin-bottom: 15px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h2 { font-size: clamp(1.5em, 4vw, 2.5em); color: #667eea; margin-bottom: 20px; }
-        p { font-size: clamp(1em, 3vw, 1.3em); color: #4a5568; line-height: 1.6; max-width: 90%; margin-bottom: 25px; }
-        
-        button { 
-            background: linear-gradient(45deg, #f8c8dc, #ffbed8); 
-            border: none; padding: 18px 35px; font-size: 1.1em; 
-            border-radius: 50px; cursor: pointer; margin: 10px 15px; 
-            box-shadow: 0 8px 20px rgba(248,200,220,0.4); 
-            transition: all 0.3s ease; color: #4a5568; font-weight: 600;
-            position: relative; overflow: hidden;
+
+        .container {
+            width: 85%; max-width: 450px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 40px 20px;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
-        button::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
+
+        .page { display: none; animation: fadeIn 0.8s forwards; }
+        .active { display: flex; flex-direction: column; align-items: center; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        button:hover::before { left: 100%; }
-        button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(248,200,220,0.6); }
-        
-        .countdown { 
-            font-size: clamp(2.5em, 8vw, 4em); font-weight: 800; 
-            color: #667eea; margin: 25px 0; text-shadow: 0 2px 8px rgba(102,126,234,0.4);
-            background: rgba(255,255,255,0.9); padding: 20px 40px; border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 10px; color: var(--dark-blue); }
+        h2 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
+        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
+
+        .main-gif { width: 100%; max-width: 220px; border-radius: 20px; margin-bottom: 20px; }
+
+        button {
+            padding: 18px 30px; font-size: 1.2rem; border: none; border-radius: 50px;
+            background: var(--pastel-pink); color: white; cursor: pointer;
+            font-weight: bold; transition: 0.3s; width: 90%; margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(255, 183, 178, 0.4);
+            touch-action: manipulation;
         }
-        
-        .characters { display: flex; gap: 30px; margin: 25px 0; }
-        .char { 
-            width: clamp(90px, 20vw, 130px); height: clamp(90px, 20vw, 130px); 
-            background: linear-gradient(135deg, #fefefe, #f8f1ff); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: clamp(2.5em, 6vw, 4em); box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            animation: bounce 2s infinite ease-in-out;
+
+        .gift-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 15px; width: 100%; margin-top: 20px;
         }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-8px); } }
-        
-        .cat { width: 160px; height: 160px; margin: 25px auto; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 5em; background: rgba(255,255,255,0.9); box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
-        .cat-standing { background: linear-gradient(135deg, #ffedff, #f8c8dc); animation: sway 3s infinite ease-in-out; }
-        @keyframes sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-        
-        .gifts { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; margin-top: 35px; }
-        .gift { 
-            width: clamp(110px, 22vw, 140px); height: clamp(110px, 22vw, 140px); 
-            background: linear-gradient(135deg, #fefefe, #f0f8ff); border-radius: 25px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-            box-shadow: 0 12px 30px rgba(162,207,254,0.3); font-size: 1.1em; color: #4a5568;
-            font-weight: 500; position: relative; overflow: hidden;
+
+        .gift-item {
+            background: white; padding: 15px; border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; align-items: center;
+            cursor: pointer;
         }
-        .gift::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(248,200,220,0.2); opacity: 0; transition: opacity 0.3s; }
-        .gift:hover { transform: translateY(-8px) scale(1.05); box-shadow: 0 20px 45px rgba(162,207,254,0.5); }
-        .gift:hover::before { opacity: 1; }
-        .gift-icon { font-size: 3em; margin-bottom: 5px; }
-        
-        .modal { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 100; padding: 40px 20px;
+        .gift-item img { width: 80px; height: 80px; object-fit: contain; }
+        .gift-item p { margin: 10px 0 0; font-size: 0.9rem; font-weight: bold; }
+
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--pastel-white); z-index: 100;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 30px; box-sizing: border-box;
         }
-        .modal.active { display: flex; animation: modalSlide 0.5s ease-out; }
-        @keyframes modalSlide { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        
-        .fireworks { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
-            background: 
-                radial-gradient(circle at 20% 80%, #ffedff 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, #a2cffe 1px, transparent 1px),
-                radial-gradient(circle at 40% 40%, #f8c8dc 1px, transparent 1px);
-            background-size: 60px 60px, 80px 80px, 50px 50px;
-            animation: sparkle 3s infinite linear;
-            opacity: 0; transition: opacity 0.5s;
+        .overlay.active { display: flex; }
+
+        .message-box {
+            background: white; padding: 30px; border-radius: 30px;
+            border-left: 10px solid var(--pastel-pink); text-align: left;
+            max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            font-family: 'Dancing Script', cursive; font-size: 1.4rem;
+            max-height: 65vh; overflow-y: auto;
         }
-        .fireworks.active { opacity: 0.7; }
-        @keyframes sparkle { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) rotate(180deg); } }
-        
-        audio { margin: 20px 0; width: 250px; }
-        .letter-text, .bouquet-text { max-width: 85%; text-align: center; line-height: 1.7; }
-        
-        @media (max-width: 480px) { .characters { gap: 20px; } .gifts { flex-direction: column; align-items: center; } }
     </style>
 </head>
 <body>
-    <!-- Fireworks overlay -->
-    <div class="fireworks" id="fireworks"></div>
-    
-    <!-- Page 1: Countdown + Characters -->
-    <div class="page active" id="page1">
-        <div class="characters">
-            <div class="char">🐻‍❄️</div>
-            <div class="char">🐰</div>
+
+    <div class="container">
+        <div id="page1" class="page active">
+            <img class="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3V1NWxjMDQ0NWVsazZvNnc4OHYxeXhpN250cDh3cmZtb3h0cGFvdCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/qutWTSucYBUOcVtD3N/giphy.gif">
+            <h1>Counting down for us...</h1>
+            <div id="timer" style="font-size: 2.2rem; font-weight: bold; margin: 15px 0; color: var(--dark-blue);"></div>
+            <button onclick="nextPage(2)">Open Surprise 🥳</button>
         </div>
-        <div class="countdown" id="countdown">Calculating...</div>
-        <h1>Happy New Year!</h1>
-        <button onclick="nextPage('page2')">Next</button>
-    </div>
-    
-    <!-- Page 2: Surprise Cat -->
-    <div class="page" id="page2">
-        <h1>Hi my love 😻</h1>
-        <p>I got a surprise for you!</p>
-        <div class="cat" id="cat">🐱💐</div>
-        <button onclick="showNo()">No</button>
-        <button onclick="showYes()">Yes</button>
-    </div>
-    
-    <!-- Page 3: Happy New Year -->
-    <div class="page" id="page3">
-        <div id="fireworks" class="fireworks"></div>
-        <h1>Happy New Year my love! 🎉</h1>
-        <p style="font-size: 1.4em;">Let's make 2026 magical together ✨</p>
-        <button onclick="nextPage('page4')">Next</button>
-    </div>
-    
-    <!-- Page 4: Gifts -->
-    <div class="page" id="page4">
-        <h1>Gifts for you 🎁</h1>
-        <p>Click to open your special surprises 💕</p>
-        <div class="gifts">
-            <div class="gift" onclick="openModal('letter')">
-                <div class="gift-icon">💌</div>Letter Bouquet
-            </div>
-            <div class="gift" onclick="openModal('camera')">
-                <div class="gift-icon">📸</div>Camera
-            </div>
-            <div class="gift" onclick="openModal('music')">
-                <div class="gift-icon">🎵</div>Music
-            </div>
-            <div class="gift" onclick="openModal('bouquet')">
-                <div class="gift-icon">🌹</div>Bouquet
+
+        <div id="page2" class="page">
+            <img id="p2-img" class="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdiejJ0NG94eTdjMzFmNnExeGYxNWx3dnRzZGUwaXVvMTdkYXpvNSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/d9aLLB15el8nNyvzWE/giphy.gif">
+            <h1 id="p2-text">Hey Bestie! I have a special surprise for you!</h1>
+            <div id="p2-buttons" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <button onclick="nextPage(3)">Ooooh, show me! ✨</button>
+                <button onclick="showAngryState()" style="background: #e0e0e0; color: #777; width: 60%; font-size: 0.9rem;">No thanks</button>
             </div>
         </div>
-    </div>
-    
-    <!-- Gift Modals -->
-    <div class="modal" id="modal-letter">
-        <h2>💌 Your Special Letter</h2>
-        <div class="letter-text">
-            Happy New Year, my dearest love! 🌹<br><br>
-            As the clock strikes midnight, my heart beats only for you. Every moment we've shared feels like pure magic, 
-            and I can't wait to create even more beautiful memories together in 2026. You've brought colors to my world 
-            that I never knew existed. I love you more than words can ever express, today and always. 💕<br><br>
-            Wishing us endless adventures, cozy nights, and unbreakable love ahead. You're my everything.
+
+        <div id="page3" class="page">
+            <img class="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTJjcHY3ZzlnMmJoOWg5NnRpeHQzN2FtNGhqbjdqMXV3MXhycXU5cSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/tXMLrfkP48TqfS0uiX/giphy.gif">
+            <h1>Ready for 2026?</h1>
+            <p>I can't wait to crush another year with my favorite person. You ready for the madness?</p>
+            <button onclick="launchCelebrate()">YES, LET'S GO! 🚀</button>
         </div>
-        <button onclick="closeModal()">Back to Gifts</button>
-    </div>
-    
-    <div class="modal" id="modal-camera">
-        <h2>📸 Our Best Moments</h2>
-        <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin:20px 0;">
-            <div style="width:140px;height:140px;background:linear-gradient(45deg,#f8c8dc,#a2cffe);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:3em;">💕</div>
-            <div style="width:140px;height:140px;background:linear-gradient(45deg,#fefefe,#ffedff);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:3em;">🌙</div>
-            <div style="width:140px;height:140px;background:linear-gradient(45deg,#a2cffe,#f0f8ff);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:3em;">⭐</div>
-            <div style="width:140px;height:140px;background:linear-gradient(45deg,#f8c8dc,#fefefe);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:3em;">💖</div>
+
+        <div id="page4" class="page">
+            <img class="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGdpODVjYXJtZ2pibXhnaXNqbDhkbjZ2ZjdqZjJxdHN5ZHZnNHJuMCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/uV6ZueyzR8J6pCdxtZ/giphy.gif">
+            <h1 style="color: white; font-size: 4rem; margin: 0;">2026</h1>
+            <h2 style="color: white; font-size: 2.2rem;">Happy New Year, Bestie!</h2>
+            <p style="color: #a2d2ff; font-weight: bold; padding: 0 10px;">New year, same us, more chaos! I'm so glad to have a friend like you to start 2026 with.</p>
+            <button onclick="nextPage(5)" style="background: white; color: #5e548e;">See Your Gifts 🎁</button>
         </div>
-        <button onclick="closeModal()">Back to Gifts</button>
-    </div>
-    
-    <div class="modal" id="modal-music">
-        <h2>🎵 Our Special Song</h2>
-        <div style="font-size:4em; margin:20px 0;">😻🐱</div>
-        <p style="color:#667eea; font-size:1.3em;">Listening together under the stars ✨</p>
-        <audio controls style="width:280px; margin:20px 0;">
-            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAo" type="audio/wav">
-        </audio>
-        <button onclick="closeModal()">Back to Gifts</button>
-    </div>
-    
-    <div class="modal" id="modal-bouquet">
-        <h2>🌹 Special Bouquet Message</h2>
-        <div style="width:180px;height:180px;background:linear-gradient(135deg,#f8c8dc,#ffedff);margin:25px auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:5em;box-shadow:0 20px 45px rgba(248,200,220,0.4);">🐻🌸</div>
-        <div class="bouquet-text">
-            My sweet love, these flowers are for you because you bloom my world brighter every single day. 🐻🌸<br><br>
-            Happy New Year to the one who makes my heart smile even on the toughest days! You're not just my partner—
-            you're my safe place, my biggest cheerleader, and my forever happiness. Thank you for loving me through 
-            every season. Here's to us growing more beautifully together in the coming year! 💖<br><br>
-            Forever yours.
+
+        <div id="page5" class="page">
+            <h1>2026 Gift Box</h1>
+            <p>Tap a gift to open it!</p>
+            <div class="gift-grid">
+                <div class="gift-item" onclick="openGift('view-letter')">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N5bm9scXFjYnY1M3Vvbm81dGRxNmsxeGt6bnd0emZ6eHh4eHh4eCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/j659Gdz7w2222z5G9G/giphy.gif">
+                    <p>Friendship Note</p>
+                </div>
+                <div class="gift-item" onclick="openGift('view-bouquet')">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGsyZjBnbzMyMXFjODltN3o5aGU1dGdhNW1rMmJ2NXJtMHhvYmJjcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/X5PsaxTP6U3h9dUSxd/giphy.gif">
+                    <p>Flower Language</p>
+                </div>
+                <div class="gift-item" onclick="openGift('view-music')" style="grid-column: span 2;">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXdyamlxM3pmYTR4ZWUxbnlvZHN0N2U4b2R2enZ3ajhjNmtkaGY2MyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/SSWmGVbh7ctgxZavhc/giphy.gif">
+                    <p>Our 2026 Vibe</p>
+                </div>
+            </div>
         </div>
-        <button onclick="closeModal()">Back to Gifts</button>
+    </div>
+
+    <div id="view-letter" class="overlay">
+        <div class="message-box">
+            <h2>To My Best Friend,</h2>
+            <p>Happy 2026! I was just thinking about all the crazy memories we made this past year, and I can't wait to make even better ones.</p>
+            <p>Thanks for being the person I can always count on for a laugh or a long talk. You're stuck with me for another year! Let's make it epic.</p>
+            <p style="text-align: right; font-size: 1.6rem;">Cheers to us! 🥂</p>
+        </div>
+        <button onclick="closeGift()" style="width: auto; padding: 10px 40px; margin-top: 20px;">Close</button>
+    </div>
+
+    <div id="view-bouquet" class="overlay">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3prdmpiMXZmb3QxYWRsNm1vbWI1N3N5azZvd2IzcHZtMnAzenhkbiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/IiYsGHhE3wwd9yx9Ko/giphy.gif" style="width: 180px;">
+        <div class="message-box" style="text-align: center; border-left: none; border-bottom: 8px solid var(--sky-blue);">
+            <h3>Friendship Blooms</h3>
+            <p><b>Yellow Roses:</b> For our unbreakable friendship.</p>
+            <p><b>Sunflowers:</b> For the loyalty and joy we share.</p>
+            <p><b>Lavender:</b> For the peace of knowing you've got my back.</p>
+        </div>
+        <button onclick="closeGift()" style="width: auto; padding: 10px 40px; margin-top: 20px;">Back</button>
+    </div>
+
+    <div id="view-music" class="overlay">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXdyamlxM3pmYTR4ZWUxbnlvZHN0N2U4b2R2enZ3ajhjNmtkaGY2MyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/SSWmGVbh7ctgxZavhc/giphy.gif" style="width: 200px;">
+        <h2>Our 2026 Rhythm</h2>
+        <p>"Everything is better when I'm dancing through life with my best friend."</p>
+        <button onclick="closeGift()" style="width: auto; padding: 10px 40px; margin-top: 20px;">Back</button>
     </div>
 
     <script>
-        // Page navigation
-        function nextPage(pageId) {
+        function nextPage(num) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if (pageId === 'page3') document.getElementById('fireworks').classList.add('active');
+            document.getElementById('page' + num).classList.add('active');
+            document.body.style.background = (num === 4) ? "#060b1d" : "linear-gradient(135deg, var(--pastel-white), var(--sky-blue))";
         }
-        
-        // Page 2 interactions
-        function showNo() {
-            const cat = document.getElementById('cat');
-            cat.innerHTML = '🐱🔪';
-            cat.style.background = 'linear-gradient(135deg, #ffedff, #f8c8dc)';
-            setTimeout(() => {
-                alert('How dare you... 😈💔');
-                cat.innerHTML = '🐱💐';
-                cat.style.background = 'rgba(255,255,255,0.9)';
-            }, 1500);
+
+        function showAngryState() {
+            const img = document.getElementById('p2-img');
+            const txt = document.getElementById('p2-text');
+            const btns = document.getElementById('p2-buttons');
+            img.src = "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bnJkd3QxdTM3bm9nbTd0cGQ2cHVoOTM2bDNtMjJrNWNsbWc3NmdmOCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/0jX3XiW2ABBXYmxKfw/giphy.gif";
+            txt.innerText = "Wow... rude! 🔪 Friends don't click 'No' on surprises! Try again!";
+            btns.innerHTML = `<button onclick="resetPage2()" style="background: var(--dark-blue);">I'm sorry! Let me fix it! 🥺</button>`;
         }
-        
-        function showYes() {
-            const cat = document.getElementById('cat');
-            cat.innerHTML = '🐱✨';
-            cat.classList.add('cat-standing');
-            setTimeout(() => nextPage('page3'), 1200);
+
+        function resetPage2() {
+            const img = document.getElementById('p2-img');
+            const txt = document.getElementById('p2-text');
+            const btns = document.getElementById('p2-buttons');
+            img.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdiejJ0NG94eTdjMzFmNnExeGYxNWx3dnRzZGUwaXVvMTdkYXpvNSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/d9aLLB15el8nNyvzWE/giphy.gif";
+            txt.innerText = "Hey Bestie! I have a special surprise for you!";
+            btns.innerHTML = `<button onclick="nextPage(3)">Ooooh, show me! 😍</button><button onclick="showAngryState()" style="background: #e0e0e0; color: #777; width: 60%; font-size: 0.9rem;">No thanks</button>`;
         }
-        
-        // Modal controls
-        function openModal(type) {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-            document.getElementById(`modal-${type}`).classList.add('active');
+
+        function launchCelebrate() {
+            nextPage(4);
+            const duration = 12 * 1000;
+            const animationEnd = Date.now() + duration;
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                confetti({ particleCount: 45, spread: 80, origin: { y: 0.6 }, colors: ['#ffb7b2', '#a2d2ff', '#ffffff', '#ffd700'] });
+            }, 400);
         }
-        function closeModal() {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+
+        function openGift(id) { document.getElementById(id).classList.add('active'); }
+        function closeGift() { document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active')); }
+
+        function startTimer() {
+            const target = new Date("Jan 1, 2026 00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff < 0) { document.getElementById('timer').innerText = "HAPPY NEW YEAR!"; return; }
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24), m = Math.floor((diff / 1000 / 60) % 60), s = Math.floor((diff / 1000) % 60);
+                document.getElementById('timer').innerText = `${h}h ${m}m ${s}s`;
+            }, 1000);
         }
-        
-        // Live New Year countdown (to Jan 1, 2026)
-        function updateCountdown() {
-            const now = new Date();
-            const ny2026 = new Date('2026-01-01T00:00:00');
-            const diff = ny2026 - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('countdown').textContent = `${days} Days to New Year! ✨`;
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 24 * 60 * 60 * 1000);
-        
-        // Auto-play music on modal open
-        document.getElementById('modal-music').addEventListener('transitionend', function() {
-            const audio = this.querySelector('audio');
-            if (audio) audio.play().catch(() => {});
-        });
+        startTimer();
     </script>
 </body>
 </html>
+
 ```
-
-Save as `newyear-surprise.html`, open in Chrome. Perfect pastel colors, smooth animations, fully responsive—exact match to your Canva template description. Host free on GitHub Pages for shareable link![1]
-
-[1](https://www.perplexity.ai/search/b11a25ab-9750-4fcb-986d-f575cf5dcebb)
